@@ -3,7 +3,7 @@ const multer = require("multer");
 const Post = require("./api/models/posts");
 require('dotenv').config();
 
-
+const port = process.env.PORT || 5000;
 const app = express();
 const postData = new Post();
 const storage = multer.diskStorage({
