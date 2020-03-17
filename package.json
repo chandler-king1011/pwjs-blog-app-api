@@ -10,6 +10,7 @@
   "author": "Chandler King <ckmotox356@gmail.com> (https://www.npmjs.com/~chandler_king1011)",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "multer": "^1.4.2"
   }

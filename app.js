@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const Post = require("./api/models/posts");
+require('dotenv').config();
 
 
 const app = express();
@@ -64,4 +65,4 @@ app.post("/api/posts", upload.single("post-image"), (req, res) => {
 })
 
 
-app.listen(3000, () => console.log("Listening on http://localhost:3000"));
+app.listen(port, () => console.log(`Listening on http://localhost:3000${port}`));
