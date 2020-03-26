@@ -37,32 +37,26 @@ app.use((req, res, next) => {
 app.use('/uploads', express.static("uploads"));
 
 app.get("/api/posts", (req, res) => {
-    res.status(200).send(postData.getAll());  
+    postData.getAll(res);  
 })
 
 
 app.get("/api/posts/:post_id", (req, res) => {
-    const singlePost = postData.getOneBlog(req.params.post_id);
-    if(singlePost) {
-        res.status(200).send(singlePost);
-    } else {
-        res.status(404).send("Not Found");
-    }
-    
+    postData.getOneBlog(req.params.post_id, res);
+
 });
 
 app.post("/api/posts", upload.single("post-image"), (req, res) => {
     const fileName = ((req.file.path).slice(8));
     const newPost = {
-        "id": `${Date.now()}`,
-        "title": req.body.title,
-        "content": req.body.content,
-        "added_date": `${Date.now()}`,
-        "post_image": `uploads/${fileName}`
+        "posts_id": `${Date.now()}`,
+        "posts_title": req.body.title,
+        "posts_content": req.body.content,
+        "posts_date": `${Date.now()}`,
+        "posts_img": `uploads/${fileName}`
     }
-    postData.add(newPost);
-    res.status(200).send(newPost);
+    postData.add(newPost, res);
 })
 
 
-app.listen(port, () => console.log(`Listening on http://localhost:3000${port}`));
+app.listen(port, () => console.log(`Listening on http://localhost:${port}`));

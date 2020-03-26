@@ -1,32 +1,47 @@
+const mysql = require("mysql");
+require('dotenv').config();
+const dbConfig = require("../../database/database");
 const fs = require("fs");
 const PATH = "./data.json";
 
+
+
 class Post {
     constructor() {
+        this.dbConn = mysql.createPool(dbConfig);
+    }
+    getAll(res) {
+        this.dbConn.query("SELECT * FROM posts", 
+        (err, results) => { 
+            if (err) {
+                res.status(400).send({"errorrrrrr": err});
+            } else {
+                res.status(200).send(results);
+            }
+        });
 
     }
-    getAll() {
-        return this.readData();
-
+    getOneBlog(postId, res) {
+        this.dbConn.query("SELECT * FROM posts WHERE posts_id = ?", 
+        [postId], 
+        (err, results) => {
+            if(err) {
+                res.status(400).send(err);
+            } else {
+                res.status(200).send(results);
+            }
+        })
     }
-    getOneBlog(postId) {
-        const allPosts = this.readData();
-        const singlePost = allPosts.find((post) => post.id == postId);
-        return singlePost;
-    }
-    add(newPost) {
-        const currentPosts = this.readData();
-        currentPosts.unshift(newPost);
-        this.storeData(currentPosts);
-    }
-    readData() {
-        let rawData = fs.readFileSync(PATH);
-        let data = JSON.parse(rawData);
-        return data
-    }
-    storeData(rawData) {
-        let data = JSON.stringify(rawData);
-        fs.writeFileSync(PATH, data);
+    add(newPost, res) {
+        this.dbConn.query("INSERT INTO posts SET ?", 
+        [newPost], 
+        (err, results) => {
+            if (err) {
+                res.status(400).send(err);
+            } else {
+                res.status(400).send(results);
+            }
+        })
     }
 }
 
