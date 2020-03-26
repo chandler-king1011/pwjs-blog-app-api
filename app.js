@@ -31,7 +31,7 @@ const getExt = (mimeType) => {
 
 app.use(express.json());
 app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", "*");
     next();
 });
 app.use('/uploads', express.static("uploads"));
