@@ -49,7 +49,6 @@ app.get("/api/posts/:post_id", (req, res) => {
 app.post("/api/posts", upload.single("post-image"), (req, res) => {
     const fileName = ((req.file.path).slice(8));
     const newPost = {
-        "posts_id": `${Date.now()}`,
         "posts_title": req.body.title,
         "posts_content": req.body.content,
         "posts_date": `${Date.now()}`,

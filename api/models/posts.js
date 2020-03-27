@@ -1,8 +1,6 @@
 const mysql = require("mysql");
 require('dotenv').config();
 const dbConfig = require("../../database/database");
-const fs = require("fs");
-const PATH = "./data.json";
 
 
 
@@ -14,7 +12,7 @@ class Post {
         this.dbConn.query("SELECT * FROM posts", 
         (err, results) => { 
             if (err) {
-                res.status(400).send({"errorrrrrr": err});
+                res.status(400).send({"error": err});
             } else {
                 res.status(200).send(results);
             }
@@ -39,7 +37,7 @@ class Post {
             if (err) {
                 res.status(400).send(err);
             } else {
-                res.status(400).send(results);
+                res.status(200).send(results);
             }
         })
     }
